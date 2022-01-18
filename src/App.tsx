@@ -1,20 +1,22 @@
 import React from 'react';
 import './App.css';
-import {QueryClient, QueryClientProvider} from 'react-query'
+import {QueryClientProvider} from 'react-query'
 import {ReactQueryDevtools} from 'react-query/devtools'
-import {StartWars} from "./components/InfineSwapi/StartWars";
+import {queryClient} from "./hooks/react-query/queryClient";
+import {LazyDays} from "./lazyDays/LazyDays";
+import {BrowserRouter} from "react-router-dom";
 
-
-const queryClient = new QueryClient();
 
 function App() {
     return (
-        <QueryClientProvider client={queryClient}>
-            <div className="App">
-               <StartWars />
-            </div>
-            <ReactQueryDevtools/>
-        </QueryClientProvider>
+        <BrowserRouter>
+            <QueryClientProvider client={queryClient}>
+                <div className="App">
+                    <LazyDays/>
+                </div>
+                <ReactQueryDevtools/>
+            </QueryClientProvider>
+        </BrowserRouter>
     );
 }
 
