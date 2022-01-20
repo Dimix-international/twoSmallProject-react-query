@@ -47,3 +47,18 @@ export const useStaff = () => {
         setFilter:setFilterHandler,
     }
 }
+
+
+const useSetSearchParams = (search: string) =>{
+    const [searchParams, setSearchParams] = useSearchParams();
+    const query = searchParams.get(search) || '';
+
+    const setSearchParamsHandler = (value:string) =>{
+        setSearchParams({...Object.entries(searchParams), search: value});
+    }
+
+    return {
+        query,
+        setSearchParamsHandler,
+    }
+}

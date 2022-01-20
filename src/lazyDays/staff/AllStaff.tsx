@@ -15,64 +15,64 @@ export const AllStaff = React.memo(props => {
 
     const defValueRadio = useRef(staff.filter);
 
+    if (staff.data.length === 0) return <></>
     return (
-        <>
-            <Box>
+        <Box>
+            <Typography
+                variant={'h3'}
+                component={'h1'}
+                align={'center'}
+                marginTop={5}
+            >
+                Our Staff
+            </Typography>
+            <Stack m={10} spacing={8} justifyContent={'center'}
+                   direction={{xs: 'column', sm: 'row'}}>
+                {
+                    staff.data.map(item => (
+                        <Staff key={item.id} staffData={item}/>
+                    ))
+                }
+            </Stack>
+            <Stack
+                direction={{xs: 'column', sm: 'row'}}
+                justifyContent={'center'}
+                alignItems={'center'}
+                spacing={3}
+            >
                 <Typography
-                    variant={'h3'}
-                    component={'h1'}
+                    variant={'h6'}
+                    component={'h6'}
                     align={'center'}
-                    marginTop={5}
+                    sx={{
+                        fontWeight: 700
+                    }}
                 >
-                    Our Staff
+                    Filter by treatment:
                 </Typography>
-                <Stack m={10} spacing={8} justifyContent={'center'}
-                       direction={{xs: 'column', sm: 'row'}}>
+                <RadioGroup
+                    row aria-label="gender"
+                    name="row-radio-buttons-group"
+                    defaultValue={defValueRadio.current.toLowerCase()}
+                >
+                    <FormControlLabel value="all" control={<Radio/>}
+                                      label="All"
+                                      onClick={() => staff.setFilter('all')}
+                    />
                     {
-                        staff.data.map(item => (
-                            <Staff key={item.id} staffData={item}/>
+                        treatments.map(item => (
+                            <FormControlLabel
+                                key={item.id}
+                                value={item.name.toLowerCase()}
+                                control={<Radio/>}
+                                label={item.name}
+                                onClick={() => staff.setFilter(item.name)}
+                            />
                         ))
                     }
-                </Stack>
-                <Stack
-                    direction={{xs: 'column', sm: 'row'}}
-                    justifyContent={'center'}
-                    alignItems={'center'}
-                    spacing={3}
-                >
-                    <Typography
-                        variant={'h6'}
-                        component={'h6'}
-                        align={'center'}
-                        sx={{
-                            fontWeight: 700
-                        }}
-                    >
-                        Filter by treatment:
-                    </Typography>
-                    <RadioGroup
-                        row aria-label="gender"
-                        name="row-radio-buttons-group"
-                        defaultValue={defValueRadio.current.toLowerCase()}
-                    >
-                        <FormControlLabel value="all" control={<Radio/>}
-                                          label="All"
-                                          onClick={() => staff.setFilter('all')}
-                        />
-                        {
-                            treatments.map(item => (
-                                <FormControlLabel
-                                    key={item.id}
-                                    value={item.name.toLowerCase()}
-                                    control={<Radio/>}
-                                    label={item.name}
-                                    onClick={() => staff.setFilter(item.name)}
-                                />
-                            ))
-                        }
-                    </RadioGroup>
-                </Stack>
-            </Box>
-        </>
+                </RadioGroup>
+            </Stack>
+        </Box>
+
     )
 })
