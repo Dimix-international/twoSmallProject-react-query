@@ -1,6 +1,9 @@
 import Box from "@mui/material/Box";
 import {NavBar} from "./app/NavBar";
 import {RoutesComponent} from "./app/Routes";
+import {Loading} from "./app/Loading";
+import {CustomizedSnackbars} from "./common/Snack";
+import React from "react";
 
 
 export const LazyDays = () => {
@@ -9,6 +12,8 @@ export const LazyDays = () => {
         <Box>
             <NavBar/>
             <RoutesComponent/>
+            <Loading/>
+            <CustomizedSnackbars />
         </Box>
     )
 }

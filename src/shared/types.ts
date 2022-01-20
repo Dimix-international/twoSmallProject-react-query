@@ -16,3 +16,9 @@ export interface Treatment extends Id {
     image:Image;
     description:string;
 }
+
+export interface Staff extends Id {
+    name:string ;
+    treatmentNames: string [];
+    image:Image
+}

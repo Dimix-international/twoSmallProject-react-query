@@ -12,7 +12,7 @@ import Stack from "@mui/material/Stack";
 
 export const NavBar = React.memo(() => {
     return (
-        <Box sx={{flexGrow: 1}}>
+        <Box sx={{flexGrow: 1, height:'70px'}}>
             <AppBar position="static">
                 <Toolbar>
                     <CustomLink to={'/'}>

@@ -15,10 +15,10 @@ export const CustomLink: React.FC<CustomLinkType> = React.memo(props => {
     })
     const finallyClassLink = match
         ? `${s.link} ${s.active} ${addClass}`
-        : `${s.link} ${s.active}`;
+        : `${s.link} ${addClass}`;
 
     return (
-        <Link {...props} className={finallyClassLink}>
+        <Link {...props} className={s.link}>
             {children}
         </Link>
     )

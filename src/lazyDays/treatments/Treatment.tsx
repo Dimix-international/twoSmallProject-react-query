@@ -1,7 +1,7 @@
 import React, {ReactElement} from "react";
-import type {Treatment as TreatmentType} from '../../../shared/types'
+import type {Treatment as TreatmentType} from '../../shared/types'
 import Typography from "@mui/material/Typography";
-import {CardComponent} from "../../common/CardComponent";
+import {CardComponent} from "../common/CardComponent";
 
 type TreatmentPropsType = {
     treatmentData: TreatmentType
@@ -16,6 +16,7 @@ export const Treatment: React.FC<TreatmentPropsType> = React.memo((props): React
             itemName={treatmentData.name}
             image={treatmentData.image}
             cardContents={cardContents}
+            trigger={'treatment'}
         />
     )
 })
