@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useLayoutEffect, useRef, useState} from "react";
 import {useStaff} from "../../hooks/react-query/useStaff";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -13,7 +13,7 @@ export const AllStaff = React.memo(props => {
     const staff = useStaff();
     const treatments = useTreatments();
 
-    const [defValueRadio, setDefValueRadio] = useState(() => staff.filter || 'all');
+    const defValueRadio = useRef(staff.filter);
 
     return (
         <>
@@ -53,7 +53,7 @@ export const AllStaff = React.memo(props => {
                     <RadioGroup
                         row aria-label="gender"
                         name="row-radio-buttons-group"
-                        defaultValue={defValueRadio.toLowerCase()}
+                        defaultValue={defValueRadio.current.toLowerCase()}
                     >
                         <FormControlLabel value="all" control={<Radio/>}
                                           label="All"

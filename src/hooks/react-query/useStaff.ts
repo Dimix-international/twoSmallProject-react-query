@@ -38,7 +38,7 @@ export const useStaff = () => {
 
     const setFilterHandler = (value:string) =>{
         setFilter(value);
-        setSearchParams({...Object.entries(searchParams), filterStaff: filter});
+        setSearchParams({...Object.entries(searchParams), filterStaff: value});
     }
 
     return {

@@ -5,7 +5,8 @@ import {Home} from "./Home";
 import {Endpoints} from "../../axiosInstance/constant";
 import {Treatments} from "../treatments/Treatments";
 import {AllStaff} from "../staff/AllStaff";
-import {Calendar} from "../calendar/Calendar";
+import {Appointment} from "../appointments/Appointment";
+import {Calendar} from "../appointments/Calendar";
 
 
 export const RoutesComponent = React.memo(props => {

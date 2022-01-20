@@ -6,4 +6,5 @@ export const enum Endpoints {
     Treatments = 'treatments',
     Staff = 'staff',
     Calendar = 'calendar',
+    User = 'user',
 }
