@@ -1,6 +1,6 @@
 import React from "react";
 import dayjs from "dayjs";
-import {useAppointments} from "../../hooks/react-query/useAppointments";
+import {useAppointments} from "../hooks/react-query/useAppointments";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Box from "@mui/material/Box";

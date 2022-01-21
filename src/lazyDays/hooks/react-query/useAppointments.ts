@@ -8,18 +8,18 @@ import {
     useState
 } from 'react';
 
-import { axiosInstance } from "../../axiosInstance/axiosInstance";
+import { axiosInstance } from "../../../axiosInstance/axiosInstance";
 import {
     QueryKes as queryKeys
 } from "./queryKeys";
-import { useUser } from '../../lazyDays/user/hooks/useUser';
-import { AppointmentDateMap} from "../../shared/types";
-import { getAvailableAppointments } from '../../lazyDays/appointments/utils';
-import { getMonthYearDetails, getNewMonthYear, MonthYear } from '../../lazyDays/appointments/hooks/monthYear';
-import {Endpoints} from "../../axiosInstance/constant";
+import { useUser } from '../../user/hooks/useUser';
+import { AppointmentDateMap} from "../../../shared/types";
+import { getAvailableAppointments } from '../../appointments/utils';
+import { getMonthYearDetails, getNewMonthYear, MonthYear } from '../../appointments/hooks/monthYear';
+import {Endpoints} from "../../../axiosInstance/constant";
 import {useQuery, useQueryClient} from "react-query";
-import {setErrorApp} from "../../lazyDays/app/utils/setAppError";
-import {useApp} from "../../lazyDays/app/hooksApp/hook-app";
+import {setErrorApp} from "../../app/utils/setAppError";
+import {useApp} from "../../app/hooksApp/hook-app";
 
 // for useQuery call
 async function getAppointments(
@@ -37,6 +37,13 @@ interface UseAppointments {
     updateMonthYear: (monthIncrement: number) => void;
     showAll: boolean;
     setShowAll: Dispatch<SetStateAction<boolean>>;
+}
+
+//Общая options for useQuery and prefetchQuery
+// можно было оставить в useAppointments, но надо было обернуть в useMemo
+const commonOptions = {
+    staleTime: 0,
+    cacheTime: 300000,
 }
 
 // The purpose of this hook:
@@ -83,11 +90,11 @@ export function useAppointments(): UseAppointments {
             const nextMonthYear = getNewMonthYear(monthYear, 1);
             queryClient.prefetchQuery(
                 [queryKeys.Appointments,nextMonthYear.year, nextMonthYear.month],
-                () => getAppointments(nextMonthYear.year, nextMonthYear.month)
+                () => getAppointments(nextMonthYear.year, nextMonthYear.month),
+                commonOptions
             )
         },[queryClient, monthYear])
 
-        // TODO: update with useQuery!
         // Notes:
         //    1. appointments is an AppointmentDateMap (object with days of month
         //       as properties, and arrays of appointments for that day as values)
@@ -99,7 +106,14 @@ export function useAppointments(): UseAppointments {
         () => getAppointments(monthYear.year, monthYear.month),
         {
             select:showAll ? undefined : selectFn, //вызываем когда показываем не все данные
-            onError: (error) => setErrorApp(error, appDispatch)
+            //перенастроим глобальные настройки
+            ...commonOptions,
+            refetchOnMount:true,
+            refetchOnWindowFocus: true,
+            refetchOnReconnect:true,
+            //будем делать запрос за данными каждую минуту, даже если пользоатель не делает никаких действий
+            refetchInterval:60000,
+            // onError: (error) => setErrorApp(error, appDispatch) - глобально обрабатываем
         })
 
 

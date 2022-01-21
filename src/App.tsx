@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import {QueryClientProvider} from 'react-query'
 import {ReactQueryDevtools} from 'react-query/devtools'
-import {queryClient} from "./hooks/react-query/queryClient";
+import {queryClient} from "./lazyDays/hooks/react-query/queryClient";
 import {LazyDays} from "./lazyDays/LazyDays";
 import {BrowserRouter} from "react-router-dom";
 import {AppProvider} from "./providers/app-provider";

@@ -1,14 +1,14 @@
-import {Staff} from "../../shared/types";
-import {axiosInstance} from "../../axiosInstance/axiosInstance";
-import {Endpoints} from "../../axiosInstance/constant";
-import {useApp} from "../../lazyDays/app/hooksApp/hook-app";
+import {Staff} from "../../../shared/types";
+import {axiosInstance} from "../../../axiosInstance/axiosInstance";
+import {Endpoints} from "../../../axiosInstance/constant";
+import {useApp} from "../../app/hooksApp/hook-app";
 import {useQuery} from "react-query";
 import {QueryKes} from "./queryKeys";
 import {useFilter} from "../commonHooks/useFilter";
 import {useCallback, useState} from "react";
 import {useSearchParams} from "react-router-dom";
-import {setErrorApp} from "../../lazyDays/app/utils/setAppError";
-import {filterByTreatment} from "../../lazyDays/staff/utils";
+import {setErrorApp} from "../../app/utils/setAppError";
+import {filterByTreatment} from "../../staff/utils";
 
 export const getStaff = async (): Promise<Staff []> => {
     const response = await axiosInstance(Endpoints.Staff);
@@ -27,7 +27,7 @@ export const useStaff = () => {
 
     const {data = []} = useQuery(QueryKes.Staff, getStaff, {
         select: filter === 'all' ? undefined : selectFn,
-        onError: (error) => setErrorApp(error, appDispatch)
+        /*onError: (error) => setErrorApp(error, appDispatch)*/ //глобально обрабатываем
     });
 
     // const {availableItems} = useFilter({items: data, filterProp: filter});

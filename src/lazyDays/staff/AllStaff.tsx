@@ -1,5 +1,5 @@
 import React, {useEffect, useLayoutEffect, useRef, useState} from "react";
-import {useStaff} from "../../hooks/react-query/useStaff";
+import {useStaff} from "../hooks/react-query/useStaff";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
@@ -7,7 +7,7 @@ import {Staff} from "./Staff";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import {useTreatments} from "../../hooks/react-query/useTreatments";
+import {useTreatments} from "../hooks/react-query/useTreatments";
 
 export const AllStaff = React.memo(props => {
     const staff = useStaff();

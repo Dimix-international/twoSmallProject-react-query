@@ -2,7 +2,7 @@ import React from "react";
 import {Appointment as AppointmentType, User} from "../../shared/types";
 import {appointmentInPast, getAppointmentColor} from "./utils";
 import {useUser} from "../user/hooks/useUser";
-import {useAppointments} from "../../hooks/react-query/useAppointments";
+import {useAppointments} from "../hooks/react-query/useAppointments";
 import dayjs from "dayjs";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";

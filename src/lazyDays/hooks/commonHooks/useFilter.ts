@@ -1,4 +1,4 @@
-import {Staff} from "../../shared/types";
+import {Staff} from "../../../shared/types";
 
 type FilterType = {
     items: Staff []
