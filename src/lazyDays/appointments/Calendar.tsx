@@ -1,6 +1,6 @@
 import React from "react";
 import dayjs from "dayjs";
-import {useAppointments} from "./hooks/useAppointments";
+import {useAppointments} from "../../hooks/react-query/useAppointments";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Box from "@mui/material/Box";
@@ -86,27 +86,3 @@ export const Calendar = React.memo(() => {
         </Box>
     )
 })
-
-/*
-    <Box sx={{
-    display:'grid',
-        gridTemplateColumns:'repeat(7, 1fr)',
-        gap:'20px',
-}} my={4} mx={5}>
-    {/!* first day needs a grid column *!/}
-<DateBox
-    date={1}
-    gridColumn={monthYear.firstDOW + 1}
-    appointments={appointments[1]}
-/>
-{/!* the rest of the days will follow *!/}
-{[...Array(monthYear.lastDate)].map((_, i) =>
-    i > 0 ? (
-        <DateBox
-            key={i} date={i + 1}
-            appointments={appointments[i + 1]}
-
-        />
-    ) : null,
-)}
-</Box>*/

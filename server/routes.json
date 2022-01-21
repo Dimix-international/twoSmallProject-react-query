@@ -1,0 +1,3 @@
+{
+  "/appointments/:year/:month": "/appointments?year=:year&month=:month"
+}

@@ -1,14 +1,25 @@
-// @ts-nocheck
-import dayjs from 'dayjs';
-import { Dispatch, SetStateAction, useState } from 'react';
 
-import { axiosInstance } from "../../../axiosInstance/axiosInstance";
-import { QueryKes as  queryKeys} from "../../../hooks/react-query/queryKeys";
-import { useUser } from '../../user/hooks/useUser';
-import { AppointmentDateMap } from '../types';
-import { getAvailableAppointments } from '../utils';
-import { getMonthYearDetails, getNewMonthYear, MonthYear } from './monthYear';
-import {Endpoints} from "../../../axiosInstance/constant";
+import dayjs from 'dayjs';
+import {
+    Dispatch,
+    SetStateAction,
+    useCallback,
+    useEffect,
+    useState
+} from 'react';
+
+import { axiosInstance } from "../../axiosInstance/axiosInstance";
+import {
+    QueryKes as queryKeys
+} from "./queryKeys";
+import { useUser } from '../../lazyDays/user/hooks/useUser';
+import { AppointmentDateMap} from "../../shared/types";
+import { getAvailableAppointments } from '../../lazyDays/appointments/utils';
+import { getMonthYearDetails, getNewMonthYear, MonthYear } from '../../lazyDays/appointments/hooks/monthYear';
+import {Endpoints} from "../../axiosInstance/constant";
+import {useQuery, useQueryClient} from "react-query";
+import {setErrorApp} from "../../lazyDays/app/utils/setAppError";
+import {useApp} from "../../lazyDays/app/hooksApp/hook-app";
 
 // for useQuery call
 async function getAppointments(
@@ -40,6 +51,7 @@ export function useAppointments(): UseAppointments {
     /** ****************** START 1: monthYear state *********************** */
         // get the monthYear for the current date (for default monthYear state)
     const currentMonthYear = getMonthYearDetails(dayjs());
+    const {appDispatch} = useApp();
 
     // state to track current monthYear chosen by user
     // state value is returned in hook return object
@@ -61,8 +73,19 @@ export function useAppointments(): UseAppointments {
     const { user } = useUser();
 
     /** ****************** END 2: filter appointments  ******************** */
+    const selectFn = useCallback( (data:AppointmentDateMap) => getAvailableAppointments(data, user),[])
+
     /** ****************** START 3: useQuery  ***************************** */
         // useQuery call for appointments for the current monthYear
+        const queryClient = useQueryClient();
+
+        useEffect(() =>{
+            const nextMonthYear = getNewMonthYear(monthYear, 1);
+            queryClient.prefetchQuery(
+                [queryKeys.Appointments,nextMonthYear.year, nextMonthYear.month],
+                () => getAppointments(nextMonthYear.year, nextMonthYear.month)
+            )
+        },[queryClient, monthYear])
 
         // TODO: update with useQuery!
         // Notes:
@@ -71,7 +94,14 @@ export function useAppointments(): UseAppointments {
         //
         //    2. The getAppointments query function needs monthYear.year and
         //       monthYear.month
-    const appointments = {};
+    const {data :appointments = []} = useQuery(
+        [queryKeys.Appointments,monthYear.year, monthYear.month], //обновлялись данные на каждом месяце
+        () => getAppointments(monthYear.year, monthYear.month),
+        {
+            select:showAll ? undefined : selectFn, //вызываем когда показываем не все данные
+            onError: (error) => setErrorApp(error, appDispatch)
+        })
+
 
     /** ****************** END 3: useQuery  ******************************* */
 

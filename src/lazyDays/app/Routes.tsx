@@ -5,7 +5,6 @@ import {Home} from "./Home";
 import {Endpoints} from "../../axiosInstance/constant";
 import {Treatments} from "../treatments/Treatments";
 import {AllStaff} from "../staff/AllStaff";
-import {Appointment} from "../appointments/Appointment";
 import {Calendar} from "../appointments/Calendar";
 
 
