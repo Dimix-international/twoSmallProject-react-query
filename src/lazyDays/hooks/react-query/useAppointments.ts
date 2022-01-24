@@ -80,7 +80,7 @@ export function useAppointments(): UseAppointments {
     const { user } = useUser();
 
     /** ****************** END 2: filter appointments  ******************** */
-    const selectFn = useCallback( (data:AppointmentDateMap) => getAvailableAppointments(data, user),[])
+    const selectFn = useCallback( (data:AppointmentDateMap) => getAvailableAppointments(data, user),[user])
 
     /** ****************** START 3: useQuery  ***************************** */
         // useQuery call for appointments for the current monthYear

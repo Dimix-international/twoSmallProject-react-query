@@ -9,6 +9,7 @@ import {useCallback, useState} from "react";
 import {useSearchParams} from "react-router-dom";
 import {setErrorApp} from "../../app/utils/setAppError";
 import {filterByTreatment} from "../../staff/utils";
+import {log} from "util";
 
 export const getStaff = async (): Promise<Staff []> => {
     const response = await axiosInstance(Endpoints.Staff);

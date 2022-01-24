@@ -9,8 +9,20 @@ import LocalFloristIcon from '@mui/icons-material/LocalFlorist';
 import {CustomLink} from "../common/CustomLink/CustomLink";
 import {Endpoints} from "../../axiosInstance/constant";
 import Stack from "@mui/material/Stack";
+import {useUser} from "../user/hooks/useUser";
+import {useAuth} from "../auth/useAuth";
+import {useApp} from "./hooksApp/hook-app";
+import {useNavigate} from "react-router-dom";
+
+
+const Links = ['Treatments','Staff', 'Calendar' ]
 
 export const NavBar = React.memo(() => {
+    const {user} = useUser();
+    const {signout} = useAuth();
+    const {appDispatch} = useApp();
+    const navigate = useNavigate()
+
     return (
         <Box sx={{flexGrow: 1, height:'70px'}}>
             <AppBar position="static">
@@ -27,23 +39,38 @@ export const NavBar = React.memo(() => {
                         </IconButton>
                     </CustomLink>
                     <Stack direction={'row'} spacing={5} sx={{flexGrow: 1}}>
-                        <CustomLink to={Endpoints.Treatments}>
-                            <Typography variant={'subtitle2'} component="div">
-                                Treatments
-                            </Typography>
-                        </CustomLink>
-                        <CustomLink to={Endpoints.Staff}>
-                            <Typography variant={'subtitle2'} component="div">
-                                Staff
-                            </Typography>
-                        </CustomLink>
-                        <CustomLink to={Endpoints.Calendar}>
-                            <Typography variant={'subtitle2'} component="div">
-                                Calendar
-                            </Typography>
-                        </CustomLink>
+                        {
+                            Links.map(link => (
+                                <CustomLink key={link} to={link.toLowerCase()}>
+                                    <Typography variant={'subtitle2'} component="div">
+                                        {link}
+                                    </Typography>
+                                </CustomLink>
+                            ))
+                        }
                     </Stack>
-                    <Button color={'primary'} variant={'contained'}>Sing in</Button>
+                    {
+                        user ? (
+                            <>
+                                <CustomLink to={`${Endpoints.User}/${user.id}`}>
+                                    <Typography variant={'subtitle2'} component="div">
+                                        {user.email}
+                                    </Typography>
+                                    <Button
+                                        color={'primary'}
+                                        variant={'contained'}
+                                        onClick={() => signout()}
+                                    >Sing out</Button>
+                                </CustomLink>
+                            </>
+                        ) : <Button
+                            onClick={() => {
+                                appDispatch({type:'loggedUser', payload:false})
+                                navigate(Endpoints.SignIn)
+                            }}
+                            color={'primary'}
+                            variant={'contained'}>Sing in</Button>
+                    }
                 </Toolbar>
             </AppBar>
         </Box>

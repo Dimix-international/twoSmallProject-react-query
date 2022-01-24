@@ -4,13 +4,15 @@ import {AppContext} from "../context/app-context";
 
 export type AppStateType = {
     error: string | null
-    severity: 'error' | 'warning' | 'info' | 'success'
+    severity: 'error' | 'warning' | 'info' | 'success',
+    isLogged: boolean
 }
 
 export const AppProvider = ({children}: { children: ReactNode }) => {
     const [appState, appDispatch] = useReducer(appReducer, {
         error: null,
         severity: 'error',
+        isLogged: true,
     });
     const value = useMemo(() => ({
         appState, appDispatch

@@ -1,3 +1,5 @@
 {
-  "/appointments/:year/:month": "/appointments?year=:year&month=:month"
+  "/appointments/:year/:month": "/appointments?year=:year&month=:month",
+  "/user/:id/appointments": "/user?id=:id/appointments",
+  "/user/:id": "/user?id=:id"
 }

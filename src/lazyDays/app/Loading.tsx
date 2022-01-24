@@ -1,12 +1,13 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
-import {useIsFetching} from "react-query";
+import {useIsFetching, useIsMutating} from "react-query";
 
 export const Loading = React.memo(props => {
     const isFetching = useIsFetching();
+    const isMutating = useIsMutating();
 
-    const display = isFetching ? 'flex' : 'none';
+    const display = (isFetching || isMutating) ? 'flex' : 'none';
 
     return (
         <Box sx={{

@@ -1,4 +1,5 @@
 import {AppDispatchType} from "../../../context/app-context";
+import {AppStateType} from "../../../providers/app-provider";
 
 
 export const setErrorApp = (error: unknown, appDispatch: AppDispatchType) => {
@@ -8,6 +9,6 @@ export const setErrorApp = (error: unknown, appDispatch: AppDispatchType) => {
             : 'error connection to the server';
     appDispatch({
         type: 'set-error',
-        payload: {error: title, severity: 'error'}
+        payload: {error: title, severity: 'error'}  as AppStateType
     })
 }

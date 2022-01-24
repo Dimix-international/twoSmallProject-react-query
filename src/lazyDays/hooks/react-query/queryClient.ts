@@ -1,5 +1,6 @@
 import {QueryClient} from "react-query";
 import {useApp} from "../../app/hooksApp/hook-app";
+import {AppStateType} from "../../../providers/app-provider";
 
 
 export const QueryErrorHandler = (error: unknown) => {
@@ -8,7 +9,7 @@ export const QueryErrorHandler = (error: unknown) => {
         error instanceof Error //если ошибка относится к ошибкам JS
             ? error.toString().replace(/^Error:\s*/, '') //уберем слово Error:
             : 'error connection to the server';
-    appDispatch({type: 'set-error', payload: {error:title, severity:'error'}})
+    appDispatch({type: 'set-error', payload: {error:title, severity:'error'} as AppStateType})
 }
 
 export const queryClient = new QueryClient({
@@ -20,6 +21,9 @@ export const queryClient = new QueryClient({
             refetchOnMount:false,//не будете refetch при монтировании компоненты, где вызывается useTreatments
             refetchOnWindowFocus: false,//не будете refetch если убрали фокус с страницы
             refetchOnReconnect:false,//не будете refetch если нету ответа от сервера (нету интернета)
+        },
+        mutations: {
+            onError:QueryErrorHandler,
         }
     }
 });

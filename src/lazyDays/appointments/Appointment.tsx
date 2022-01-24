@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import {useReserveAppointment} from "./hooks/useReserveAppointment";
 
 // determine whether this appointment can be reserved / un-reserved by logged-in user
 function isClickable(
@@ -27,7 +28,7 @@ export const Appointment: React.FC<AppointmentPropsType> = React.memo(props => {
     const {appointmentData} = props;
 
     const {user} = useUser();
-    const reserveAppointment = useAppointments();
+    const reserveAppointment = useReserveAppointment();
     // @ts-ignore
     const [textColor, bgColor] = getAppointmentColor(appointmentData, user?.id);
 

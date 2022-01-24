@@ -3,6 +3,7 @@ import {useEffect} from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, {AlertProps} from '@mui/material/Alert';
 import {useApp} from "../app/hooksApp/hook-app";
+import {AppStateType} from "../../providers/app-provider";
 
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -21,7 +22,7 @@ export const CustomizedSnackbars = () => {
         if (reason === 'clickaway') {
             return;
         }
-        appDispatch({type:'set-error', payload:{error:null, severity:'error'}})
+        appDispatch({type:'set-error', payload:{error:null, severity:'error'} as AppStateType})
         setOpen(false);
     };
 

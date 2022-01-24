@@ -10,12 +10,19 @@ export const appReducer = (state: AppStateType, action: AppActionsType): AppStat
     const setError = (): AppStateType => {
         return {
             ...state,
-            ...action.payload
+            ...action.payload as AppStateType
+        }
+    }
+    const logUser = (): AppStateType =>{
+        return {
+            ...state,
+            isLogged: action.payload as boolean
         }
     }
 
     const appActions = {
         'set-error': setError,
+        'loggedUser':logUser,
         'default': () => state,
     } as AppReducerReturnType
 
