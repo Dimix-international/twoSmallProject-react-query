@@ -69,7 +69,7 @@ export const CardComponent: React.FC<CardPropsType> = React.memo((props) => {
                 <CardContent>
                     <Stack>
                         <Typography gutterBottom variant={'h5'} align={'center'}
-                                    component="div">
+                                    component={'h5'}>
                             {itemName}
                         </Typography>
                         {cardContents}
